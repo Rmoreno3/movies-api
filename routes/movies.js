@@ -80,23 +80,23 @@ function moviesApi(app) {
     }
   });
 
-  router.patch('/:movieId', async function (req, res, next) {
-    const { movieId } = req.params;
-    const { body: movie } = req;
-    try {
-      const updateDataMovie = await movieService.updateDataMovie({
-        movieId,
-        movie,
-      });
+  // router.patch('/:movieId', async function (req, res, next) {
+  //   const { movieId } = req.params;
+  //   const { body: movie } = req;
+  //   try {
+  //     const updateDataMovie = await movieService.updateDataMovie({
+  //       movieId,
+  //       movie,
+  //     });
 
-      res.status(200).json({
-        data: updateDataMovie,
-        message: 'Data movie is Actualised',
-      });
-    } catch (error) {
-      next(error);
-    }
-  });
+  //     res.status(200).json({
+  //       data: updateDataMovie,
+  //       message: 'Data movie is Actualised',
+  //     });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // });
 }
 
 module.exports = moviesApi;
