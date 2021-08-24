@@ -1,3 +1,4 @@
+const debug = require('debug')('app:server');
 const express = require('express');
 const helmet = require('helmet');
 const app = express();
@@ -29,5 +30,5 @@ app.use(wrapErrors);
 app.use(handleError);
 
 app.listen(config.port, () => {
-  console.log(`Listening http://localhost:${config.port}`);
+  debug(`Listening http://localhost:${config.port}`);
 });
