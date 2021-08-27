@@ -5,6 +5,10 @@ const express = require('express');
 const passport = require('passport');
 const { config } = require('../config/index');
 const ApiKeysService = require('../services/apiKeys');
+const UsersService = require('../services/users');
+const validationHandler = require('../utils/middlewares/validationHandler');
+
+const { createUserSchema } = require('../utils/schemas/users');
 
 // Basic Strategy
 require('../utils/auth/strategies/basic');
@@ -14,6 +18,7 @@ function authApi(app) {
   app.use('/api/auth', router);
 
   const apiKeysService = new ApiKeysService();
+  const usersService = new UsersService();
 
   router.post('/sign-in', async function (req, res, next) {
     const { apiKeyToken } = req.body;
@@ -33,9 +38,9 @@ function authApi(app) {
             next(err);
           }
 
-          const keyApi = await apiKeysService.getApiKey({ token: apiKeyToken });
+          const apiKey = await apiKeysService.getApiKey({ token: apiKeyToken });
 
-          if (!keyApi) {
+          if (!apiKey) {
             next(boom.unauthorized());
           }
 
@@ -45,7 +50,7 @@ function authApi(app) {
             sub: id,
             name,
             email,
-            scopes: keyApi.scopes,
+            scopes: apiKey.scopes,
           };
 
           const token = jwt.sign(payload, config.authJwtSecret, {
@@ -62,6 +67,25 @@ function authApi(app) {
       }
     })(req, res, next);
   });
+
+  router.post(
+    '/sign-up',
+    validationHandler(createUserSchema),
+    async function (req, res, next) {
+      const { body: user } = req;
+
+      try {
+        const createUserId = await usersService.createUser({ user });
+
+        res.status(201).json({
+          data: createUserId,
+          message: 'Your user has been created',
+        });
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
 }
 
 module.exports = authApi;
