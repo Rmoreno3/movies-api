@@ -1,7 +1,7 @@
 const joi = require('joi');
 
-const { movieIdSchema } = './movies.js';
-const { userIdSchema } = './users.js';
+const { movieIdSchema } = require('./movies.js');
+const { userIdSchema } = require('./users.js');
 
 const userMovieIdSchema = joi.string().regex(/^[0-9a-fA-F]{24}$/);
 
