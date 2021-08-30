@@ -6,6 +6,14 @@
   ],
   "routes": [
     { "src": "/.*", "dest": "index.js"}
-    
-  ]
+  ],
+  "env": {
+    "DB_USER": "db_user_platzivideo",
+    "DB_PASSWORD": "TWEiU60TMy8UiRPn",
+    "DB_HOST": "cluster0.ogufl.mongodb.net",
+    "DB_NAME": "platzivideos_db",
+    "AUTH_JWT_SECRET": "EbeY5La32d7R80GxAWXuwhClyJKHBjp6",
+    "PUBLIC_API_KEY_TOKEN": "3a1a6a0278824b33da16eaea5fe9a3f1328abe637bb0ededdc2af0c3b6970a87",
+    "ADMIN_API_KEY_TOKEN": "fbd6d1be1aa3dc048c0bea2ac6205a2e170d758f640700a53915217c5b72db67"
+  }
 }
